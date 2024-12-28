@@ -1,18 +1,24 @@
 import React, { useState } from "react";
 
-const TaskForm = ({addTask}) => {
+const TaskForm = ({ addTask }) => {
   const [task, setTask] = useState("");
 
   const [priority, setPriority] = useState("Medium");
 
   const [category, setCategory] = useState("General");
 
-  const handleSubmit = () => {
-    addTask({text: task, priority, category, completed: false});
-  }
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    addTask({ text: task, priority, category, completed: false });
+
+    // reset the form
+    setTask("");
+    setPriority("Medium");
+    setCategory("General");
+  };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} className='task-form'>
       <div id="inp">
         <input
           type="text"
@@ -24,9 +30,8 @@ const TaskForm = ({addTask}) => {
         <span>
           <button type="submit">Add Task</button>
         </span>
-        <h1>{task}</h1>
       </div>
-      <div>
+      <div id="btns">
         <select value={priority} onChange={(e) => setPriority(e.target.value)}>
           <option value="High">High</option>
           <option value="Medium">Medium</option>
